@@ -1,0 +1,12 @@
+Login
+Sales
+Sell
+Test1
+8
+Sell
+Test2
+8
+Sell
+Test3
+0
+Logout

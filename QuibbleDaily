@@ -1,0 +1,68 @@
+
+if [ ! -d "transactions" ]; then
+   mkdir transactions
+fi
+
+test=false
+if [ $test == false ];
+then			#20
+
+
+end=false
+while !($end); do
+    read -p "Continue Day $days? (Yes\No)" ans
+    case $ans in
+    	 [Yy]es )
+	 echo "Session Started:";
+	 python QuibbleFE.py;;
+					#30
+
+	 [Nn]o )
+	 echo "End of Day";
+	 end=true;;
+	 * ) echo "ERROR: Invalid option: \"$ans\" ";
+	 break;;
+    esac
+done
+
+for num in 0{1..9} {10..99}; do
+   if [ -d "./transactions/weekly$num" ]; then
+      new=true
+      for day in $(seq 5); do
+         if [ ! -d "./transactions/weekly$num/daily$day" ]; then
+            new=false
+            thisDay=daily$day
+            thisWeek=weekly$num
+            mkdir ./transactions/$thisWeek/$thisDay
+            break
+         fi
+      done
+      if [ $new == false ]; then
+         break
+      fi
+   elif [ ! -d "./transactions/weekly$num" ]; then
+      thisDay=daily1
+      thisWeek=weekly$num
+      mkdir ./transactions/$thisWeek
+      mkdir ./transactions/$thisWeek/$thisDay
+      break
+   fi
+done
+
+echo "Saving in $thisDay of $thisWeek"
+
+
+
+python CreateMerged.py
+mv dailyTransactions* ./transactions/$thisWeek/$thisDay
+cp mergedTransactions.txt ./transactions/$thisWeek/$thisDay/mergedTransactions.txt	#40
+cp masterEvents.txt ./transactions/$thisWeek/$thisDay/masterEvents.txt
+cp currentEvents.txt ./transactions/$thisWeek/$thisDay/currentEvents.txt
+rm currentEvents.txt
+python QuibbleBO.py masterEvents.txt mergedTransactions.txt newMEfile.txt currentEvents.txt
+cat newMEfile.txt >| masterEvents.txt
+mv newMEfile.txt ./transactions/$thisWeek/$thisDay
+cat currentEvents.txt >| newCE.txt
+mv newCE.txt ./transactions/$thisWeek/$thisDay
+rm mergedTransactions.txt
+fi

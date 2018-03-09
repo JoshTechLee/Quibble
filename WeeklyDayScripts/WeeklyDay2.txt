@@ -1,0 +1,11 @@
+Yes
+Login
+Sales
+Return
+1stDay1
+7
+Sell
+1stDay2
+7
+Logout
+No

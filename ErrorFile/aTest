@@ -1,0 +1,13 @@
+python tester.py
+for x in $(seq 5); do
+    echo "Done Python tester.py"
+done
+
+for run in $(seq 10); do
+    read -p "Do you wish to install this program?" yn
+    case $yn in
+        [Yy]* ) echo "what what";;
+        [Nn]* ) exit;;
+        * ) echo "Not Valid: \"$yn\"";;
+    esac
+done

@@ -1,0 +1,55 @@
+	Session 1
+Login
+Sales
+Sell
+Test1
+8
+Sell
+Test2
+8
+Sell
+Test3
+Sell
+0
+Logout
+
+	Session 2
+Login
+Sales
+Return
+Test1
+1
+Test2
+Return
+5
+Return
+Test3
+7
+Logout
+
+	Session 3
+Login
+Admin
+Create
+Test5
+171010
+250
+Delete
+Test4
+Logout
+
+	Session 4
+Login
+Admin
+Sell
+Test1
+700
+Logout
+
+	Session 5
+Login
+Admin
+Sell
+Test1
+700
+Logout

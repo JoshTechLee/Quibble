@@ -1,0 +1,10 @@
+# a set of transaction scripts that are run on 5 different sessions to simulate 5 different days.
+
+# a hard reset that removes the transactions files and empties all the current events files and master events files.
+bash reset
+
+bash Quibble < ./WeeklyDayScripts/WeeklyDay1.txt
+bash Quibble < ./WeeklyDayScripts/WeeklyDay2.txt
+bash Quibble < ./WeeklyDayScripts/WeeklyDay3.txt
+bash Quibble < ./WeeklyDayScripts/WeeklyDay4.txt
+bash Quibble < ./WeeklyDayScripts/WeeklyDay5.txt

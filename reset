@@ -1,0 +1,3 @@
+> currentEvents.txt
+> masterEvents.txt
+rm -rf transactions

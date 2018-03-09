@@ -1,0 +1,16 @@
+Yes
+Login
+Admin
+Sell
+1stDay1
+90
+Add
+1stDay2
+999
+Create
+4thDay1
+161111
+999
+Delete
+1stDay2
+Logout

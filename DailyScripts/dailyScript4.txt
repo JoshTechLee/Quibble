@@ -1,0 +1,6 @@
+Login
+Admin
+Sell
+Test1
+700
+Logout

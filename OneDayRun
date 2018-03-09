@@ -1,0 +1,59 @@
+# Since we are running only one day, we have to account for events that already exist.  Since we cannot mingle with a created event in another session within the same day, this is a necessity.  Thus, the program will reset everything into a specific day scenario and run the scripts as follows.
+
+# Note: since there was an error that did not allow scripts to be run as intended, the program removed the "continue day" feature to work around the error.
+
+
+
+# reset everything to run the daily script again
+bash ./DailyScripts/dailyReset
+
+if [ ! -d "transactions" ]; then
+   mkdir transactions
+fi
+
+# the "continue day" feature removed to run 5 sessions separately
+python QuibbleFE.py < ./DailyScripts/dailyScript1.txt
+python QuibbleFE.py < ./DailyScripts/dailyScript2.txt
+python QuibbleFE.py < ./DailyScripts/dailyScript3.txt
+python QuibbleFE.py < ./DailyScripts/dailyScript4.txt
+python QuibbleFE.py < ./DailyScripts/dailyScript5.txt
+
+for num in 0{1..9} {10..99}; do
+   if [ -d "./transactions/weekly$num" ]; then
+      new=true
+      for day in $(seq 5); do
+         if [ ! -d "./transactions/weekly$num/daily$day" ]; then
+            new=false
+            thisDay=daily$day
+            thisWeek=weekly$num
+            mkdir ./transactions/$thisWeek/$thisDay
+            break
+         fi
+      done
+      if [ $new == false ]; then
+         break
+      fi
+   elif [ ! -d "./transactions/weekly$num" ]; then
+      thisDay=daily1
+      thisWeek=weekly$num
+      mkdir ./transactions/$thisWeek
+      mkdir ./transactions/$thisWeek/$thisDay
+      break
+   fi
+done
+
+
+python CreateMerged.py
+mv dailyTransactions* ./transactions/$thisWeek/$thisDay
+cp mergedTransactions.txt ./transactions/$thisWeek/$thisDay/mergedTransactions.txt	#40
+cp masterEvents.txt ./transactions/$thisWeek/$thisDay/masterEvents.txt
+cp currentEvents.txt ./transactions/$thisWeek/$thisDay/currentEvents.txt
+rm currentEvents.txt
+python QuibbleBO.py masterEvents.txt mergedTransactions.txt newME.txt currentEvents.txt
+cat newME.txt >| masterEvents.txt
+mv newME.txt ./transactions/$thisWeek/$thisDay
+cat currentEvents.txt >| newCE.txt
+mv newCE.txt ./transactions/$thisWeek/$thisDay
+rm mergedTransactions.txt
+
+echo "Saving in $thisDay of $thisWeek"
